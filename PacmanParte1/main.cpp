@@ -1,4 +1,5 @@
 #include "Map.h"
+#include "Enemy.h"//Importamos la clase del enemigo para poder usarlo.
 
 /// <summary>
 /// Sets the needed variables
@@ -19,6 +20,7 @@ void Draw();
 
 enum USER_INPUTS { NONE, UP, DOWN, RIGHT, LEFT, QUIT };
 Map pacman_map = Map();
+Enemy enemy1 = Enemy({10,5}); //Reservamos la memoria del enemigo debajo del mapa + le decimos donde spawnearse.
 char player_char = 'O';
 int player_x = 1;
 int player_y = 1;
@@ -41,6 +43,8 @@ int main()
 void Setup()
 {
     std::cout.sync_with_stdio(false);
+    srand(time(NULL)); //Colocamos la semilla aleatoria (s(emilla/eed) rand(om)) --> Cada vez
+                        //que ejecutemos el programa, los numeros seran más random (pseudoRandom).
     player_x = pacman_map.spawn_player.X;
     player_y = pacman_map.spawn_player.Y;
 }
@@ -133,6 +137,10 @@ void Logic()
         {
             win = true;
         }
+
+        enemy1.Update(&pacman_map); //Llamamos a la funcion Update para que se mueva el enemigo solo.
+                    // El & lo ponemos para decirle que me pase la direccion de esta variable.
+
     }
 }
 
@@ -143,6 +151,9 @@ void Draw()
     ConsoleUtils::Console_SetPos(player_x, player_y);
     ConsoleUtils::Console_SetColor(ConsoleUtils::CONSOLE_COLOR::DARK_YELLOW);
     std::cout << player_char;
+
+    enemy1.Draw();//Despues de imprimir el PLAYER, le decimos que dibuje al enemigo.
+
     ConsoleUtils::Console_ClearCharacter({ 0,(short)pacman_map.Height });
     ConsoleUtils::Console_SetColor(ConsoleUtils::CONSOLE_COLOR::CYAN);
     std::cout << "Puntuacion actual: " << player_points << " Puntuacion pendiente: " << pacman_map.points << std::endl;
