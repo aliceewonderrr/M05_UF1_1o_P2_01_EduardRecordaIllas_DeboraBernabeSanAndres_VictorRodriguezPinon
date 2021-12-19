@@ -23,12 +23,14 @@ void Enemy::RandomDirection()
 
 Enemy::Enemy()
 {			    //x //y
-	position = { 10, 5 }; //Definimos variables que tiene la clase
+	spawn = { 0,0 };
+	position = spawn; //Definimos variables que tiene la clase
 	direction = { 0, 0 }; //Definimos variables que tiene la clase
 }
 
 Enemy::Enemy(COORD _spawn)
 {
+	spawn = _spawn;
 	position = _spawn; //Ponemos posicion igual al Spawn
 	direction = { 0, 0 }; //No tocamos la direccion
 }
@@ -40,26 +42,26 @@ void Enemy::Draw()
 	std::cout << character; //Imprimimos caracter
 }
 
-void Enemy::Update(Map* _map) //* --> Puntero
+Enemy::ENEMY_STATE Enemy::Update(Map* _map, COORD _player) //* --> Puntero
 {
 	RandomDirection(); //Llamamos a la función para que vaya en una direccion aleatoria.
 	COORD newPosition = position; //Creamos posicion temporal para el enemigo
 	//newPosition = posición temporal /position = posición actual.
-
 	newPosition.X += direction.X; //Sumamos la direccion para que se mueva
 	newPosition.Y += direction.Y; //Lo mismo 
 	
 	//TELETRANSPORTE
-	/*if (newPosition.X < 0)
+
+	if (newPosition.X < 0)
 	{
-		newPosition.X = pacman_map.Width - 1;
+		newPosition.X = _map->Width - 1;
 	}
-	newPosition.X %= pacman_map.Width;
+	newPosition.X %= _map->Width;
 	if (newPosition.Y < 0)
 	{
-		newPosition.Y = pacman_map.Height - 1;
+		newPosition.Y = _map->Height - 1;
 	}
-	newPosition.Y %= pacman_map.Height;*/
+	newPosition.Y %= _map->Height;
 
 	//COLISION PAREDES
 	//Copiamos y pegamos el switch del archivo "main.cpp" y lo modificamos
@@ -70,4 +72,13 @@ void Enemy::Update(Map* _map) //* --> Puntero
 		break;
 	}
 	position = newPosition; //Aplicamos la posicion temporal a la posicion actual.
+
+	ENEMY_STATE state = ENEMY_STATE::ENEMY_NONE;
+	if (position.X == _player.X && position.Y == _player.Y) 
+	{
+		position = spawn;
+		state = ENEMY_STATE::ENEMY_KILLED;
+	}
+	return state;
+
 }
