@@ -46,7 +46,7 @@ void Player::Update(Map* _map, USER_INPUTS input, std::vector<Enemy>* enemies)
     case Map::MAP_TILES::MAP_POINT:
         _map->points--;
         points++;
-        _map->SetTile(newPosition.X, newPosition.X, Map::MAP_TILES::MAP_EMPTY);
+        _map->SetTile(newPosition.X, newPosition.Y, Map::MAP_TILES::MAP_EMPTY);
         break;
     case Map::MAP_TILES::MAP_POWERUP:
         points += 25;
@@ -55,7 +55,7 @@ void Player::Update(Map* _map, USER_INPUTS input, std::vector<Enemy>* enemies)
            enemies->at(i).PowerUpPicked();
         }
         //enemy1.PowerUpPicked();
-        _map->SetTile(newPosition.X, newPosition.X, Map::MAP_TILES::MAP_EMPTY);
+        _map->SetTile(newPosition.X, newPosition.Y, Map::MAP_TILES::MAP_EMPTY);
         break;
     }
 
