@@ -112,8 +112,8 @@ void Logic()
                 player.points += 50;
                 break;
             case Enemy::ENEMY_DEAD:
-                player_x = pacman_map.spawn_player.X;
-                player_y = pacman_map.spawn_player.Y;
+                player.position = player.spawn;
+               
                 break;
             }
         }
