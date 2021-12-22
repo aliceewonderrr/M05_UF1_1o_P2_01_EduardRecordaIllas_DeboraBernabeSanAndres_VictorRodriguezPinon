@@ -39,7 +39,7 @@ void Enemy::Draw()
 {
 	ConsoleUtils::Console_SetPos(position); //Colocamos el cursor donde vamos a dibujar el enemigo (de la consola) en la posicion del enemigo.
 	ConsoleUtils::Console_SetColor(foreground, background); //Antes de imprimir cambiamos el color del enemigo.
-	std::cout << character; //Imprimimos caracter
+	std::cout << enemy_char; //Imprimimos caracter
 }
 
 void Enemy::PowerUpPicked()

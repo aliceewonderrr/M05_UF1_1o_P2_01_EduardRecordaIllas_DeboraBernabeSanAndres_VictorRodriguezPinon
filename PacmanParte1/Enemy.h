@@ -16,7 +16,8 @@ private: //Todo lo que sea privado se pone a partir de aquí y solamente la propi
 	COORD position; //Vector2 de la consola en C++ (int x / int y).
 	COORD direction; //Se van a sumar/restar coordenadas de la posición.
 
-	char character = 'X'; //Qué vamos a imprimir
+	char enemy_char = char(30);
+	//char character = 'X'; //Qué vamos a imprimir
 	float powerup_countdown = 0;
 	const float powerup_countdown_time = 15;
 	ConsoleUtils::CONSOLE_COLOR foreground = ConsoleUtils::CONSOLE_COLOR::DARK_RED;//Guardar color de la letra (X).
