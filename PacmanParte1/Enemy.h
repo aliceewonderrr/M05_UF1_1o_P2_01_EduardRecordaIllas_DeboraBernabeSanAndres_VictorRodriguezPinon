@@ -22,15 +22,17 @@ private: //Todo lo que sea privado se pone a partir de aquí y solamente la propi
 	const float powerup_countdown_time = 15;
 	ConsoleUtils::CONSOLE_COLOR foreground = ConsoleUtils::CONSOLE_COLOR::DARK_RED;//Guardar color de la letra (X).
 	ConsoleUtils::CONSOLE_COLOR background = ConsoleUtils::CONSOLE_COLOR::BLACK;//Guardar color del fondo de la letra.
-
 	ConsoleUtils::CONSOLE_COLOR foreground_attack = ConsoleUtils::CONSOLE_COLOR::DARK_RED;
 	ConsoleUtils::CONSOLE_COLOR foreground_powerUp = ConsoleUtils::CONSOLE_COLOR::CYAN;
 
-	void RandomDirection(); //Creamos una funcion del enemigo para que decida de forma aleatoria hacia donde va a ir.
+	void MovementAlgorithm(); //Creamos una funcion del enemigo para que decida de forma aleatoria hacia donde va a ir.
 
 public: //Todo lo que sea público se pone a partir de aquí(así se hace en C++)
 
+
 	enum ENEMY_STATE{ENEMY_NONE, ENEMY_KILLED, ENEMY_DEAD}; // Declaramos un estado que la clase enemy devolvera a main.
+	
+	enum WAY {U=0, D, R, L, UD, UR, UL, DR, DL, LR, UDR, UDL, URL, DRL}; // Tipos de decisión que hay según donde hay paredes
 
 	Enemy(); //Creamos constructor que tiene el mismo nombre que la clase.
 	Enemy(COORD _spawn); //Funcion de constructor a la que le pasamos la coordenada de donde queremos que aparezca el enemigo en el mapa.
@@ -41,5 +43,11 @@ public: //Todo lo que sea público se pone a partir de aquí(así se hace en C++)
 	/*PARA CREAR LA FUNCION A PARTIR DEL PROTOTIPO:(ejemplo void Draw();) 
 	Preparamos la funcion de Draw, solo ponemos el prototipo, no hay que pasarle nada,
 	ponemos cursor encima de la palabra DRAW y pulsamos ALT y luego ENTER.*/
+
+	// Variables bool que nos diran si hay pared
+	bool isWallUp = false; //dirá si hay pared arriba
+	bool isWallDown = false; //dirá si hay pared abajo
+	bool isWallRight = false; // dirá si hay pared a lo derecha
+	bool isWallLeft = false; // dirá si hay pared a la izquierda
 };
 
