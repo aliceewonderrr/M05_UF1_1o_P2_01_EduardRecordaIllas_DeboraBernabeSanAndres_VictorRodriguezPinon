@@ -32,6 +32,7 @@ Player player = Player(pacman_map.spawn_player);
 USER_INPUTS input = USER_INPUTS::NONE;
 bool run = true;
 bool win = false;
+bool lose = false;
 
 
 int main()
@@ -96,6 +97,15 @@ void Logic()
             break;
         }
     }
+    if (lose)
+    {
+        switch (input)
+        {
+        case QUIT:
+            run = false;
+            break;
+        }
+    }
     else
     {
         if (input == USER_INPUTS::QUIT) 
@@ -113,6 +123,7 @@ void Logic()
                 break;
             case Enemy::ENEMY_DEAD:
                 player.position = player.spawn;
+                player.lives--;
                
                 break;
             }
@@ -121,6 +132,11 @@ void Logic()
         if (pacman_map.points <= 0)
         {
             win = true;
+        }
+
+        if (player.lives <= 0) 
+        {
+            lose = true;
         }
     }
 }
@@ -142,11 +158,17 @@ void Draw()
 
     ConsoleUtils::Console_ClearCharacter({ 0,(short)pacman_map.Height });
     ConsoleUtils::Console_SetColor(ConsoleUtils::CONSOLE_COLOR::CYAN);
-    std::cout << "Puntuacion actual: " << player.points << " Puntuacion pendiente: " << pacman_map.points << std::endl;
+    std::cout << "Vidas: "<< player.lives <<" || Puntuacion actual: " << player.points << " || Puntuacion pendiente: " << pacman_map.points << std::endl;
     if (win)
     {
         ConsoleUtils::Console_SetColor(ConsoleUtils::CONSOLE_COLOR::GREEN);
         std::cout << "Has ganado!" << std::endl;
+    }
+
+    if (lose)
+    {
+        ConsoleUtils::Console_SetColor(ConsoleUtils::CONSOLE_COLOR::RED);
+        std::cout << "La has cagao, Pringao" << std::endl;
     }
     std::cout << "Fotogramas: " << TimeManager::getInstance().frameCount << std::endl;
     std::cout << "Time: " << TimeManager::getInstance().time << std::endl;
