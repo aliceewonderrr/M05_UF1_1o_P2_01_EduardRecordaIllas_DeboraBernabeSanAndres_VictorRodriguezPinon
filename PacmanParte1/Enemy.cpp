@@ -4,19 +4,27 @@ void Enemy::RandomDirection()
 {
 	direction = { 0, 0 }; //1º seteamos direccion a 0,0.
 	int random = rand() % 4; //Le decimos que tenga 4 opciones; arriba, abajo, izq, dcha.
+
 	switch (random) //Usamos un switch para decidir en que direccion va a ir:
 	{
 	case 0:
-		direction.X = 1;
+		direction.X++;
+
 		break;
 	case 1:
-		direction.X = -1;
+
+		direction.X--;
+
 		break;
 	case 2:
-		direction.Y = 1;
+
+		direction.Y++;
+
 		break;
 	case 3:
-		direction.Y = -1;
+
+		direction.Y--;
+
 		break;
 	}
 }
@@ -49,32 +57,31 @@ void Enemy::PowerUpPicked()
 
 Enemy::ENEMY_STATE Enemy::Update(Map* _map, COORD _player) //* --> Puntero
 {	
-	RandomDirection(); //Llamamos a la función para que vaya en una direccion aleatoria.
+	RandomDirection();
 	COORD newPosition = position; //Creamos posicion temporal para el enemigo
 	//newPosition = posición temporal /position = posición actual.
 	newPosition.X += direction.X; //Sumamos la direccion para que se mueva
 	newPosition.Y += direction.Y; //Lo mismo 
 	
 	//TELETRANSPORTE
-
 	if (newPosition.X < 0)
 	{
 		newPosition.X = _map->Width - 1;
 	}
-	newPosition.X %= _map->Width;
+	//newPosition.X %= _map->Width;
 	if (newPosition.Y < 0)
 	{
 		newPosition.Y = _map->Height - 1;
 	}
-	newPosition.Y %= _map->Height;
+	//newPosition.Y %= _map->Height;
 
 	//COLISION PAREDES
 	//Copiamos y pegamos el switch del archivo "main.cpp" y lo modificamos
-	switch (_map->GetTile(newPosition.X, newPosition.Y))
+
+	if (_map->GetTile(newPosition.X, newPosition.Y) == Map::MAP_TILES::MAP_WALL)
 	{
-	case Map::MAP_TILES::MAP_WALL:
-		newPosition = position; //Reinicia la posicion temporal a la posicion actual pq invalidamos el movimiento del enemigo.
-		break;
+		newPosition = position;
+
 	}
 	position = newPosition; //Aplicamos la posicion temporal a la posicion actual.
 
@@ -99,6 +106,11 @@ Enemy::ENEMY_STATE Enemy::Update(Map* _map, COORD _player) //* --> Puntero
 	{
 		foreground = foreground_powerUp;
 	}
+
+
+	direction.X = 0;
+	direction.Y = 0;
+
 	return state;
 
 }
