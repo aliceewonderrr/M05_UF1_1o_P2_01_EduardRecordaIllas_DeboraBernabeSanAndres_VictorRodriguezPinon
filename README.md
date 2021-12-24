@@ -7,9 +7,9 @@
  - tarincios - Víctor Rodríguez Piñón
  
 Key Features:
-Collect as much triangles as you can.
+Consigue todos los puntos que puedas antes de que te coman los triángulos.
 
-Controls:
+Controles:
 
 W/flecha arriba: movimiento arriba
 
