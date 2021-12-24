@@ -16,9 +16,9 @@ public:
 	COORD spawn;
 	COORD position;
 	int points = 0;
+	int lives = 3;
 	Player(COORD _spawn);
 	void Update(Map* _map, USER_INPUTS input, std::vector<Enemy>* enemies);
 	void Draw();
 
 };
-
